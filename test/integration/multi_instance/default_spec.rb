@@ -12,6 +12,9 @@ end
 describe file('/etc/init/tomcat_helloworld.conf') do
   its('content') { should match(%r{env CATALINA_BASE="/opt/tomcat_helloworld/"}) }
   its('content') { should_not match(%r{env CATALINA_BASE="/opt/tomcat_helloworld"}) }
+  only_if do
+    file('/etc/init/tomcat_helloworld.conf').exist?
+  end
 end
 
 describe file('/opt/tomcat_dirworld_8_0_43') do
