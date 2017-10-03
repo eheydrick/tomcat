@@ -9,12 +9,10 @@ describe file('/opt/tomcat_helloworld_8_0_43') do
 end
 
 # make sure we get our override env value and not both
-describe file('/etc/init/tomcat_helloworld.conf') do
-  its('content') { should match(%r{env CATALINA_BASE="/opt/tomcat_helloworld/"}) }
-  its('content') { should_not match(%r{env CATALINA_BASE="/opt/tomcat_helloworld"}) }
-
-  before do
-    skip unless File.exist?('/etc/init/tomcat_helloworld.conf')
+if file('/etc/init/tomcat_helloworld.conf').exist?
+  describe file('/etc/init/tomcat_helloworld.conf') do
+    its('content') { should match(%r{env CATALINA_BASE="/opt/tomcat_helloworld/"}) }
+    its('content') { should_not match(%r{env CATALINA_BASE="/opt/tomcat_helloworld"}) }
   end
 end
 
